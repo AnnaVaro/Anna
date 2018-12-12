@@ -32,10 +32,10 @@ $result = require __DIR__ . '/formula.php';
         <form action="/calc.php" method="get">
             <input type="text" name="x1">
             <select name="operation">
-                <option value="+">+</option>
-                <option value="-">-</option>
-                <option value="*">*</option>
-                <option value="/">/</option>
+                <option value="+">сложение</option>
+                <option value="-">разность</option>
+                <option value="*">умножение</option>
+                <option value="/">деление</option>
             </select>
             <input type="text" name="x2">
             <input type="submit" value="Посчитать"> <br/><br/>

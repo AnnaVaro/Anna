@@ -1,7 +1,45 @@
+<?php
+$title = "Контакты";
+$h1 = "Контакты";
+$z = array(
+  1 => $_POST['name'] ?? '',
+  2 => $_POST['email'] ?? '',
+  3 => $_POST['content'] ?? '',
+  4 => date("m.d.Y H:i") ?? ''
+);
+$dl = '';
+
+if($z[1] && $z[2] && $z[3]){
+
+  mail("info@knowknow.ru", "новый отзыв", $z[1] . "\n" . $z[2] . "\n" . $z[3]);
+
+  if(strpos($z[3], 'http://') === false){
+    $fp = fopen("comments.txt", "a+");
+    $mytext =  "<dt><a href='" . $z[2] . "'>" . $z[1] . "</a><dd><span>" . $z[4] . "</span> " . $z[3];
+    $save = fwrite($fp, $mytext);
+    fclose($fp); // закрытие файла
+    Header("Location: ".$_SERVER['PHP_SELF']);
+    exit;
+  } else { // если в тексте есть http://
+    $dl = '<b style="color: red;">Ваш отзыв будет опубликован после проверки автором сайта</b>';
+  }
+
+} else {
+
+  $fp = @fopen("comments.txt", "r");
+  if ($fp) {
+    while (!feof($fp)) {
+      $dl .= fgetss($fp, 8000, "<dl>,<dt>,<dd>");
+    }
+  }
+  fclose($fp);
+
+}
+?>
 <!doctype html>
 <html>
 <head>
-    <title>Hello HTML</title>
+    <title><?php echo $title; ?></title>
     <meta charset="UTF-8">
      <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -15,7 +53,7 @@
 		</header>
 	</div>
 	<div class="content">
-		<h1>Контакты</h1>
+		<h1><?php echo $h1; ?></h1>
 		<hr>
 		<p>Адрес:129226 г. Москва, ул. Проспект мира, д.131, офис 3
 		<br>
@@ -25,32 +63,24 @@
 		<br>
 		Email: info@knowknow.ru </p>
 
-			<form action="index.html">
-				<fieldset>
-					<legend>Форма отзыва</legend>
-						<input type="text" placeholder="Как вас зовут">
-						<input type="email" placeholder="Напишите ваш e-mail">
-						<input type="password" placeholder="Придумайте пароль">
-					<p>Выберите пол:</p>
-						<input type="radio" id="male" name="pol">
-						<label for="male">М</label>
-						<input type="radio" id="female" name="pol">
-						<label for="female">Ж</label>
-					<p>Выберите тип сообщения:</p>
-						<input type="radio" id="otz" name="tip">
-						<label for="otz">Отзыв</label>
-						<input type="checkbox" id="pers" checked="checked">
-						<label for="pers">Согласен на обработку данных</label>
-						<textarea cols="80" rows="10">Напишите, пожалуйста, ваш отзыв или рекомендацию!</textarea>
-						<input type="submit" value="Отправить отзыв">
-						<p><a href="mailto:info@knowknow.ru">Задавайте вопросы по электронной почте</a></p> 
-				</fieldset>
-			</form>
-			&nbsp;</p>
-			<a href="/">Назад на главную</a>
-			&nbsp;</p>
+        <form method="post">
+            <label>Как к Вам обращаться:</label>
+            <input type='text' name='name' required/>
+            <label>Email:</label>
+            <input type='email' name='email' required/>
+            <label>Ваш отзыв:</label>
+            <textarea name='content' required rows="5"></textarea>
+            <input type='submit' value='Отправить отзыв'/>
+        </form>
+
+        <dl>
+            <? echo $dl; ?> <!-- PHP -->
+        </dl>
+			<a href="/">Назад на главную</a><br/>
 			<a href="catalog.php">Посмотреть обучающие курсы</a>
+        <br/><br/>
 		</div>
+    </div>
         <?php include "./footer.php"; ?>
 </body>
 </html>
