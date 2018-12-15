@@ -1,3 +1,42 @@
+<?php
+$title = "Обучение";
+$h1 = "Темы обучение";
+function catalog($id=null) {
+    $link = mysqli_connect("127.0.0.1", "root", "", "anna");
+
+    if (!$link) {
+        echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
+        echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;
+        echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
+        exit;
+    }
+
+    mysqli_set_charset($link, "utf8");
+
+    if($id) {
+        mysqli_query($link, "UPDATE `catalog` SET `likes`=`likes`+1 WHERE `id`=".mysqli_real_escape_string($link, $id));
+        $result = mysqli_query($link, "SELECT `id`, `img`, `name`, `likes`, `discription`, `price`  FROM `catalog` WHERE `id`=".mysqli_real_escape_string($link, $id));
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        mysqli_free_result($result);
+        mysqli_close($link);
+        return $row;
+    }
+    else {
+
+        $items = array();
+        if ($result = mysqli_query($link, "SELECT `id`, `img`, `name`, `likes`, `discription`, `price` FROM `catalog` ORDER BY likes")) {
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $items[] = $row;
+            }
+            mysqli_free_result($result);
+        }
+    }
+    mysqli_close($link);
+    return $items;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,42 +60,35 @@
 					Наше обучение - это встречи собственников бизнеса, предпринимателей с интересными людьми за чашкой кофе, которые в непринужденной обстановке рады общению на различные темы, обмену опытом, приобретению новых знаний, знакомых и друзей
 				</div>
 		</div>
-
-	<div class="content">
-		<h1>Темы обучения</h1>
-		<hr>
-		<div class="catalog">
-			<div class="catalog-item">
-				<img src="images/play.jpg"/>
-				<br />
-				<a href="./pages/tovar1.html">Темя 1 "Эффективные переговоры"</a>
-				<form action="button.php">
-				 	<p><input type="submit" value="Записаться на обучение"></p>
-				</form>
-			</div>
-
-			<div class="catalog-item">
-			 	<img src="images/phone.jpg"/>
-			 	<br />
-			 	<a href="./pages/tovar2.html">Тема 2 "Продажи по телефону" </a>
-				<form action="button.php">
-				  	<p><input type="submit" value="Записаться на обучение"></p>
-				</form>
-			</div>
-
-			<div class="catalog-item">
-				<img src="images/apteka.jpg"/>
-				<br />
-				<a href="./pages/tovar3.html">Тема 3 "Мерчендайзинг" </a>
-				<form action="button.php">
-				  	<p><input type="submit" value="Записаться на обучение"></p>
-				</form>
-			</div>
-			<br style="clear: both;" />
-	</div>
-
-			<a href="/">Назад на главную</a>
+        <div class="content">
+            <?php if (!empty($_GET['id'])):?>
+            <?php $item=catalog($_GET['id'])?>
+                <h1><?php echo $h1.' - '.$item['name']; ?></h1>
+                <img src="<?php echo $item['img']; ?>" alt="<?php echo $item['name']; ?>"/>
+                <div><?php echo $item['likes'];?></div>
+                <div><?php echo $item['discription'];?></div>
+                <div><?php echo $item['price'];?></div>
+            <?php else:?>
+                <h1><?php echo $h1; ?></h1>
+                <hr>
+                <div class="catalog">
+                    <?php foreach (catalog() as $item):?>
+                        <div class="catalog-item">
+                            <p><a href="/catalog.php?id=<?php echo $item['id']; ?>"><img src="<?php echo $item['img']; ?>" alt="<?php echo $item['name']; ?>"></a></p>
+                            <br />
+                            <a href="/catalog.php?id=<?php echo $item['id']; ?>"><?php echo $item['name']; ?></a>
+                            <form action="button.php">
+                                <p><input type="submit" value="Записаться на обучение"></p>
+                            </form>
+                        </div>
+                    <?php endforeach;?>
+                    <br style="clear: both;" />
+                </div>
+            <?php endif;?>
+            <a href="index.php">Назад на главную</a>
+            <br /><br />
+        </div>
         <?php include "./footer.php"; ?>
-
+    </div>
 </body>
 </html>

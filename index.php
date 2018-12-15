@@ -49,12 +49,7 @@ $h1 = "О нас";
             <li style="text-align: left;">Знают теорию через практику</li>
             <li style="text-align: left;">Работают до конечного результата</li>
         </ul>
-        <div class="slaider">
-            <div class="slaider-text">
-                Калькулятор - поможет быстро рассчитать стоимость, выбранного обучения
             </div>
-        </div>
-    </div>
     <?php include "./footer.php"; ?>
 </body>
 </html>

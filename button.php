@@ -19,6 +19,7 @@
 			<p><input placeholder="Ваша почта" name="email"></p>
 			<p><input placeholder="Ваш телефон" name="phone"></p>
 			<input type="submit" value="Отправить">
+            <br/><br/><br/><br/>
 		</form> 
 	</div>
     <?php include "./footer.php"; ?>

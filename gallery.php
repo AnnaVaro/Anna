@@ -10,6 +10,8 @@ function gallery($id=null) {
         echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
         exit;
     }
+    mysqli_set_charset($link, "utf8");
+
     if($id) {
         mysqli_query($link, "UPDATE gallery SET `likes`=`likes`+1 WHERE `id`=".mysqli_real_escape_string($link, $id));
         $result = mysqli_query($link, "SELECT `id`, `server_address`, `size`, `name`, `likes` FROM gallery WHERE `id`=".mysqli_real_escape_string($link, $id));
