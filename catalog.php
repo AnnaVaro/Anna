@@ -67,7 +67,11 @@ function catalog($id=null) {
                 <img src="<?php echo $item['img']; ?>" alt="<?php echo $item['name']; ?>"/>
                 <div><?php echo $item['likes'];?></div>
                 <div><?php echo $item['discription'];?></div>
-                <div><?php echo $item['price'];?></div>
+                <div>Стоимость - <?php echo $item['price'];?></div>
+                <form action="/cart.php" method="post">
+                    <input type="hidden" name="id" value="<?php echo $item['id']; ?>" />
+                    <p><input type="submit" value="Добавить в корзину"></p>
+                </form>
             <?php else:?>
                 <h1><?php echo $h1; ?></h1>
                 <hr>
@@ -77,8 +81,9 @@ function catalog($id=null) {
                             <p><a href="/catalog.php?id=<?php echo $item['id']; ?>"><img src="<?php echo $item['img']; ?>" alt="<?php echo $item['name']; ?>"></a></p>
                             <br />
                             <a href="/catalog.php?id=<?php echo $item['id']; ?>"><?php echo $item['name']; ?></a>
-                            <form action="button.php">
-                                <p><input type="submit" value="Записаться на обучение"></p>
+                            <form action="/cart.php" method="post">
+                                <input type="hidden" name="id" value="<?php echo $item['id']; ?>" />
+                                <p><input type="submit" value="Добавить в корзину"></p>
                             </form>
                         </div>
                     <?php endforeach;?>

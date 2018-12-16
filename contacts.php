@@ -15,7 +15,7 @@ if($z[1] && $z[2] && $z[3]){
 
   if(strpos($z[3], 'http://') === false){
     $fp = fopen("comments.txt", "a+");
-    $mytext =  "<dt><a href='" . $z[2] . "'>" . $z[1] . "</a><dd><span>" . $z[4] . "</span> " . $z[3];
+    $mytext =  $z[2] ."\n" . $z[1] . "\n" . $z[4] . "\n" . $z[3]."\n\n";
     $save = fwrite($fp, $mytext);
     fclose($fp); // закрытие файла
     Header("Location: ".$_SERVER['PHP_SELF']);

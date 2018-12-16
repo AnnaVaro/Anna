@@ -84,5 +84,6 @@ function gallery($id=null) {
         <?php endif;?>
     </div>
     <?php include "./footer.php"; ?>
+</div>
 </body>
 </html>

@@ -4,7 +4,9 @@ $menu = array(
     array('url' => '/catalog.php', 'title' => 'Обучение'),
     array('url' => '/contacts.php', 'title' => 'Контакты'),
     array('url' => '/gallery.php', 'title' => 'Галерея'),
-    array('url' => '/calc.php', 'title' => 'Калькулятор')
+    array('url' => '/calc.php', 'title' => 'Калькулятор'),
+    array('url' => '/registration.php', 'title' => 'Регистрация'),
+    array('url' => '/login.php', 'title' => 'Авторизация'),
 );
 ?>
 <ul class="mainmenu">

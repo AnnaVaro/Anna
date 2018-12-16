@@ -16,7 +16,6 @@ $h1 = "О нас";
         <header>
             <img src="images/knowknow1.png" class="logo">
             <?php include "./menu.php"; ?>
-        </header>
     </div>
 
     <div class="slaider">
@@ -53,3 +52,4 @@ $h1 = "О нас";
     <?php include "./footer.php"; ?>
 </body>
 </html>
+

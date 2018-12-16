@@ -1,3 +1,8 @@
+<?php
+$title = "Товар 2";
+$h1 = "Товар 2";
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -11,11 +16,8 @@
 		<div class="header">
 			<!-- Создание меню-->
 			<header>
-				 <img src="../images/knowknow1.png" class="logo"><ul class="mainmenu">
-				   <li><a href="../index.html">Главная</a></li>
-				   <li><a href="../catalog.php">Обучение</a></li>
-				   <li><a href="../contacts.php">Контакты</a></li>
-				  </ul>
+				 <img src="../images/knowknow1.png" class="logo">
+				 <?php include "../menu.php"; ?>
 			</header>
 		</div>
 	<div class="slaider slaider4">
@@ -55,22 +57,15 @@
 			<br /><br />
 			<span style="color: #10c479;">КАЖДЫЙ УЧАСТНИК ВЕБИНАРА ПОЛУЧИТ ПРОМОКОД НА ЭЛЕКТРОННЫЙ КУРС И ПОДСКАЗКИ ОТ KNOWKNOW</span>
 			<br /><br />
+        <br />
+        <form action="../cart.php">
+            <p><input type="submit" value="Записаться на обучение"></p>
+        </form>
 			<a href="../catalog.php">Посмотреть другие курсы</a>
 			<br /><br />
-			<a href="../index.html">Назад на главную</a>
-	</div>	
-	<div class="footer">
-		<footer>
-			<div class="text">
-				<p>&copy; Все права защищены
-				<p>
-					<li>129226, г. Москва, проспект Мира дом 131, офис 3</li>
-					<li>8-926-476-22-62 Роман</li>
-					<li>info@knowknow.ru</li>
-					<li>Режим работы: С понедельника по пятницу c 10:00 — 19:00</li></p>
-					<p><a href="https://www.youtube.com/channel/UCOzhVjPr4l8VGgC2-cayeKA"target="_blank"><img src="../images/YouTube.png" width="50" height="45"></a></p>
-			</div>		
-		</footer>
-	</div>
+			<a href="../index.php">Назад на главную</a>
+        </div>
+    </div>
+    <?php include "../footer.php"; ?>
 </body>
 </html>
