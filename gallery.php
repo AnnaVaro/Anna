@@ -1,7 +1,7 @@
 <?php
 $title = "Галерея";
 $h1 = "Галерея";
-function gallery($id=null) {
+function gallery($id=null, $offset, $limit) {
     $link = mysqli_connect("127.0.0.1", "root", "", "anna");
 
     if (!$link) {
@@ -23,7 +23,7 @@ function gallery($id=null) {
     else {
 
         $images = array();
-        if ($result = mysqli_query($link, "SELECT `id`, `server_address`, `size`, `name`, `likes` FROM gallery ORDER BY likes")) {
+        if ($result = mysqli_query($link, "SELECT `id`, `server_address`, `size`, `name`, `likes` FROM gallery ORDER BY likes LIMIT ".(int)$offset.", ".(int)$limit)) {
             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                 $images[] = $row;
             }
@@ -33,7 +33,20 @@ function gallery($id=null) {
     mysqli_close($link);
     return $images;
 }
+
+$offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
+$limit = 3;
+
+$isAjax = false ;
+if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+    // сюда попадаем в случае AJAX-запроса
+    $isAjax = true ;
+}
+
 ?>
+<?php if($isAjax): ?>
+    <?php include "gallery-items.php";?>
+<?php else: ?>
 <!doctype html>
 <html>
 <head>
@@ -75,11 +88,21 @@ function gallery($id=null) {
             <li>получ ение обратной связи.</li>
         </ul>
         <div class="gallery">
-        <?php foreach (gallery() as $image):?>
-            <div class="gallery-item">
-                <a href="/gallery.php?id=<?php echo $image['id']; ?>" target="_blank"><img src="<?php echo $image['server_address']; ?>" alt="<?php echo $image['name']; ?>"/></a>
-            </div>
-            <?php endforeach;?>
+            <?php include "gallery-items.php";?>
+            <a href="javascript: void(0)" id="more">Еще...</a>
+            <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+            <script type="text/javascript">
+                var offset = 0;
+                $(function() {
+                    var more = $('#more');
+                    more.click(function() {
+                        offset+=<?php echo $limit; ?>;
+                        $.ajax('/gallery.php?offset=' + offset).then(function(res) {
+                            $(res).insertBefore(more);
+                        });
+                    });
+                });
+            </script>
         </div>
         <?php endif;?>
     </div>
@@ -87,3 +110,4 @@ function gallery($id=null) {
 </div>
 </body>
 </html>
+<?php endif;?>
