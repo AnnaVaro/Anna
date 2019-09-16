@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Профиль пользователя</h1>
+    Логин: {{ user.login }}<br />
+    Имя: {{ user.firstName }}<br />
+    Фамилия: {{ user.lastName }}<br />
+{% endblock %}
