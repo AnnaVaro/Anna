@@ -17,6 +17,8 @@ if ($controllerName && class_exists($controllerName) && method_exists($controlle
 }
 else {
     header('Location: /lesson_5/?ctrl=404',true, 301);
+
+    
 }
 
 
