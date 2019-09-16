@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<form method="post" action="/lerron_5/index.php?ctrl=auth&action=login">
+    <label for="login">Логин</label>
+    <input type="text" id="login" name="login" /><br /><br />
+
+    <label for="password">Пароль</label>
+    <input type="text" id="password" name="password" /><br /><br />
+
+    <input type="submit" value="Войти" />
+</form>
+{% endblock %}
